@@ -1,10 +1,9 @@
 N = int(input())
 prime = []
-str = input()
-P = str.split(' ')
+str = input().split(' ')
 
 for i in range(N):
-    p = int(P[i])
+    p = int(str[i])
     isprime = True
     for j in range(2,p-1):
         if p % j == 0:
