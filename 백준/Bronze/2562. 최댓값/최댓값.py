@@ -2,9 +2,9 @@ list = []
 max = 0
 index = 1
 for i in range(9):
-    list.append( int(input()))
-    if max < list[i]:
-        max = list[i]
+    j = int(input())
+    if max < j:
+        max = j
         index = i+1
 
 print(max)
