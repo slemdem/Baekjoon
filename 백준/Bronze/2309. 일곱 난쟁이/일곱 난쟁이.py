@@ -8,7 +8,7 @@ sum = 0
 calculated = []
 rightheight = []
 while True:
-    randint = int(random.randrange(0,9))
+    randint = random.randint(0,8)
     if randint not in calculated:
         sum += height[randint]
         calculated.append(randint)
