@@ -14,9 +14,7 @@ def cut_tree(arr,length):
             if arr[i] > mid: 
                 cutted += (arr[i] - mid)
         
-        if cutted == length:
-            return mid
-        if cutted > length :
+        if cutted >= length :
             low = mid + 1
             result = mid
         else:
