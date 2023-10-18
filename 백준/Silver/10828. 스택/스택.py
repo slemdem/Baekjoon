@@ -3,7 +3,7 @@ N = int(sys.stdin.readline())
 stack = []
 
 for i in range(N):
-    comand = sys.stdin.readline().strip().split()
+    comand = sys.stdin.readline().split()
     if 'push' == comand[0]:
         push_i = int(comand[1])
         stack.append(push_i)
