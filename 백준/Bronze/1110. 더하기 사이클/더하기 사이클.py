@@ -3,10 +3,10 @@ def cycle(a = 0,b = 0):
     next = (a+b) % 10
     count += 1
     if (b*10) + next == N:
-        return True
+        return
     else:
         cycle(b,next)
-        return True
+        return
     
 N = int(input())
 count = 0
