@@ -1,4 +1,5 @@
 import sys
+sys.setrecursionlimit(10**8)
 
 from collections import deque
 
