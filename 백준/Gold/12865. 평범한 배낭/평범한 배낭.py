@@ -1,9 +1,7 @@
 import sys
 input = sys.stdin.readline
 
-N,K = input().split()
-N = int(N)
-K = int(K)
+N,K = map(int,input().split())
 stuff = []
 Bag = [[0 for j in range(K+1)] for i in range(N+1)]
 MAXV = 0
