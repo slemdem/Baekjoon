@@ -13,7 +13,7 @@ def solution(friends, gifts):
     for i in range(len(present_weight)):
         present_weight[i][2] = present_weight[i][0] +  present_weight[i][1]
     
-    next_recive = [0 for _ in range(len(friends))]
+    next_recive = [0] * len(friends)
     for i in range(len(friends)):
         for j in range(i,len(friends)):
             if(give_resive[i][j] > give_resive[j][i]):
