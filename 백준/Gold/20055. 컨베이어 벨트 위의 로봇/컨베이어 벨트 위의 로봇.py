@@ -10,17 +10,15 @@ stage = 0
 while True:
     deque.appendleft(A,deque.pop(A))
     deque.appendleft(R,deque.pop(R))
-    if R[N-1] == 1:
-        R[N-1] = 0
+    R[N-1] = 0
     
     for i in range(N-1,-1,-1):
-        if (R[i] == 1):
-            if (A[i+1] > 0 and R[i+1] != 1):
-                R[i] = 0
-                R[i+1] = 1
-                A[i+1] -= 1
-                if R[N-1] == 1:
-                    R[N-1] = 0
+        if (R[i] == 1 and A[i+1] > 0 and R[i+1] != 1):
+            R[i] = 0
+            R[i+1] = 1
+            A[i+1] -= 1
+
+    R[N-1] = 0
     
     if A[0] > 0 :
         A[0] -= 1
