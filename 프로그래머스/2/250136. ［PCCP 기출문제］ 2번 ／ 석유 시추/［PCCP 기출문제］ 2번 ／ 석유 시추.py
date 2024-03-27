@@ -2,8 +2,7 @@ def solution(land):
     chunkAmount = [0]
     chunks = [[0 for i in range(len(land[0]))]for i in range(len(land))]
     expects = [0 for i in range(len(land[0]))]
-    dx = [0,0,1,-1]
-    dy = [1,-1,0,0]
+    delta = [(1,0),(-1,0),(0,1),(0,-1)]
     que = []
     for i in range(len(land[0])):
         counted = []
@@ -16,15 +15,16 @@ def solution(land):
                     chunks[j][i] = index
                     while que:
                         x,y = que.pop()
-                        for z in range(4):
-                            nx = x + dx[z]
-                            ny = y + dy[z]
+                        for a,b in delta:
+                            nx = x + a
+                            ny = y + b
                             
-                            if nx >= 0 and nx < len(land) and ny >= 0 and ny < len(land[0]) :
+                            if  0 <= nx < len(land) and 0 <= ny < len(land[0]):
                                 if land[nx][ny] == 1 and chunks[nx][ny] == 0:
                                     chunk += 1
                                     chunks[nx][ny] = index
                                     que.append([nx,ny])
+                                    
                     chunkAmount.append(chunk)
                     expects[i] += chunkAmount[chunks[j][i]]
                     counted.append(chunks[j][i])
