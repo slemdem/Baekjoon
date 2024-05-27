@@ -1,6 +1,6 @@
 def solution(prices):
     answer = [0 for _ in range(len(prices))]
-    not_droped = []
+    
     for i in range(len(prices)):
         for j in range(i+1,len(prices)):
             answer[i] += 1
