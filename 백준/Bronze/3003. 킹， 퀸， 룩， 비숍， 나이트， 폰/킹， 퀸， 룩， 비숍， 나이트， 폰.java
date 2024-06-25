@@ -7,15 +7,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] str =br.readLine().split(" ");
-        int[] rightvalues = {1,1,2,2,2,8};
         int[] curvalues= Stream.of(str).mapToInt(Integer::parseInt).toArray();
+        int[] rightvalues = {1,1,2,2,2,8};
         
         StringBuffer sb = new StringBuffer();
         for(int i=0;i<rightvalues.length;i++){
-            rightvalues[i] = rightvalues[i] - curvalues[i];
-            sb.append(rightvalues[i]+" ");
+            sb.append((rightvalues[i] - curvalues[i])+" ");
         }
         System.out.printf(sb.toString());
     }
-    
 }
