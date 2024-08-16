@@ -1,10 +1,10 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-class Solution
-{
+public class Solution {
 	static int[] kcal;
 	static int[] taste;
+	static boolean[] visited;
 	static int score, N, L;
 	public static void main(String args[]) throws Exception
 	{
@@ -19,6 +19,7 @@ class Solution
 			L = Integer.parseInt(st.nextToken());
 			kcal = new int[N];
 			taste = new int[N];
+			visited = new boolean[N];
 			
 			for(int i= 0; i<N;i++) {
 				st = new StringTokenizer(br.readLine()," ");
@@ -27,28 +28,24 @@ class Solution
 			}
 
 			score = 0;
-			for(int i=0;i<N;i++) {
-				score = Math.max(score, calculate(i+1,kcal[i],taste[i]));
-			}
+
+			subset(0,0,0);
 			
 			sb.append("#"+test_case+" "+score+"\n");
 		}
 		System.out.println(sb);
 	}
 
-	private static int calculate(int n, int k, int t) {
-		if (k==L) {
-			return t;
+	private static void subset(int n, int k, int t) {
+		if(n==N) {
+			if (k<=L&&t>score)
+				score = t;
+			return;
 		}
-		if (k>L) {
-			return 0;
-		}
-		int sco = t;
-		for (int i= n; i<N;i++) {
-			if (k+kcal[i]<=L) {
-				sco = Math.max(sco, calculate(i+1,k+kcal[i],t+taste[i]));
-			}
-		}
-		return sco;
+		visited[n]=true;
+		subset(n+1,k+kcal[n],t+taste[n]);
+		visited[n]=false;
+		subset(n+1,k,t);
 	}
+
 }
