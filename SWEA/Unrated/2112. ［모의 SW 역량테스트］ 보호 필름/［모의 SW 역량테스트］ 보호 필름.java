@@ -67,9 +67,16 @@ public class Solution {
 			if(changeLine[i]!=0) {
 				int[] curLine = Arrays.copyOf(film[i], film[i].length);
 				film[i]= blackLine;
-				if(changefilm(film, changeLine, i+1, nowd+1, depth)) pass = true;
+				if(changefilm(film, changeLine, i+1, nowd+1, depth)) {
+					pass = true;
+					break;
+				}
+				
 				film[i]= whiteLine;
-				if(changefilm(film, changeLine, i+1, nowd+1, depth)) pass = true;
+				if(changefilm(film, changeLine, i+1, nowd+1, depth)) {
+					pass = true;
+					break;
+				}
 				film[i]=curLine;
 			}
 		}
