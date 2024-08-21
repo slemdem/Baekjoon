@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
  
 public class Solution {
 	static int K;
+	static int[][] film;
 	static int[] blackLine;
 	static int[] whiteLine;
 	
@@ -19,10 +20,7 @@ public class Solution {
             int W = Integer.parseInt(st.nextToken());
             K = Integer.parseInt(st.nextToken());
              
-            int[][] film = new int[D][W];
-            blackLine = new int[W];
-            for(int i=0; i<W;i++) blackLine[i]=1;
-            whiteLine = new int[W];
+            film = new int[D][W];
             for(int i=0; i<D;i++) {
                 st = new StringTokenizer(br.readLine(), " ");
                 for(int j=0; j<W;j++) {
@@ -30,17 +28,22 @@ public class Solution {
                 }
             }
 
-        	if(isPass(film)) {
+        	if(isPass()) {
         		sb.append("#"+test_case+" 0\n");
         		continue;
         	}
+        	
+            blackLine = new int[W];
+            for(int i=0; i<W;i++) blackLine[i]=1;
+            whiteLine = new int[W];
+            
             int[] changeLine = new int[D];
         	boolean pass = false;
             for(int i=0; i<D; i++) {
             	changeLine[D-1] = 1;
             	Arrays.sort(changeLine);
             	do {
-            		if(changefilm(film,changeLine,0,0,i)) {
+            		if(changefilm(changeLine,0,0,i)) {
             			pass=true;
             			break;
             		}
@@ -49,8 +52,9 @@ public class Solution {
             }
             
             int cnt=0;
+//            System.out.println(Arrays.toString(changeLine));
             for(int i : changeLine)
-            	if (i!=0) cnt++;
+            	if (i==1) cnt++;
             
 //            for(int[]a : film) System.out.println(Arrays.toString(a));
     		sb.append("#"+test_case+" "+(cnt-1)+"\n");
@@ -58,32 +62,34 @@ public class Solution {
         System.out.println(sb);
     }
 
-	private static boolean changefilm(int[][] film, int[] changeLine, int start, int nowd, int depth) {
+	private static boolean changefilm(int[] changeLine, int start, int nowd, int depth) {
 		if (nowd==depth) {
-			return isPass(film);
+			return isPass();
 		}
 		boolean pass = false;
 		for (int i=start; i<changeLine.length;i++) {
 			if(changeLine[i]!=0) {
 				int[] curLine = Arrays.copyOf(film[i], film[i].length);
+				
 				film[i]= blackLine;
-				if(changefilm(film, changeLine, i+1, nowd+1, depth)) {
+				if(changefilm(changeLine, i+1, nowd+1, depth)) {
 					pass = true;
 					break;
 				}
 				
 				film[i]= whiteLine;
-				if(changefilm(film, changeLine, i+1, nowd+1, depth)) {
+				if(changefilm(changeLine, i+1, nowd+1, depth)) {
 					pass = true;
 					break;
 				}
+				
 				film[i]=curLine;
 			}
 		}
 		return pass;
 	}
 
-	private static boolean isPass(int[][] film) {
+	private static boolean isPass() {
 		boolean allpass = true;
 		for (int i =0; i<film[0].length;i++) {
 			boolean pass = false;
