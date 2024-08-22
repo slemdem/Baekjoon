@@ -45,8 +45,10 @@ public class Solution {
 	
 	public static int price3(int cnt) {
 		int sum=0;
-		for (int i=0;i<3;i++)
+		for (int i=0;i<3;i++){
 			sum+=price1(cnt+i);
-		return Math.min(sum,month3);
+            if (sum>month3) return month3;
+        }
+		return sum;
 	}
 }
