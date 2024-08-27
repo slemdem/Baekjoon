@@ -5,9 +5,8 @@ class Main
 {
     static int[][] dxdy= {{0,-1},{-1,0},{0,1},{1,0}};
 	static char[][] board;
-	static boolean[][] visited;
 	static int T, N, remain;
-	
+	static HashSet<Character> ad;
 	public static void main(String[] args) throws Exception
 	{
 	
@@ -28,21 +27,19 @@ class Main
 				board[i][j] = str.charAt(j-1);
 			}
 		}
-		visited = new boolean[N+2][M+2];
-		HashSet<Character> ad = new HashSet<>();
+		ad = new HashSet<>();
 		ad.add(board[1][1]);
-		System.out.println(dfs(1,1,ad));
+		System.out.println(dfs(1,1));
 	}
 
-	private static int dfs(int x, int y, HashSet<Character> ad) {
-		visited[x][y]=true;
+	private static int dfs(int x, int y) {
 		int m = ad.size();
 		for(int i=0; i<4; i++) {
 			if(board[x+dxdy[i][0]][y+dxdy[i][1]]=='\u0000') continue;
 			if (ad.contains(board[x+dxdy[i][0]][y+dxdy[i][1]])) continue;
 			
 			ad.add(board[x+dxdy[i][0]][y+dxdy[i][1]]);
-			m =Math.max(m,dfs(x+dxdy[i][0],y+dxdy[i][1],ad));
+			m =Math.max(m,dfs(x+dxdy[i][0],y+dxdy[i][1]));
 			ad.remove(board[x+dxdy[i][0]][y+dxdy[i][1]]);
 		}
 		
