@@ -9,9 +9,6 @@ class Main
 	static HashSet<Character> ad;
 	public static void main(String[] args) throws Exception
 	{
-	
-		//System.setIn(new java.io.FileInputStream("res/sample_input.txt"));
-		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 		
@@ -35,12 +32,14 @@ class Main
 	private static int dfs(int x, int y) {
 		int m = ad.size();
 		for(int i=0; i<4; i++) {
-			if(board[x+dxdy[i][0]][y+dxdy[i][1]]=='\u0000') continue;
-			if (ad.contains(board[x+dxdy[i][0]][y+dxdy[i][1]])) continue;
+			int curx = x+dxdy[i][0];
+			int cury = y+dxdy[i][1];
+			if(board[curx][cury]=='\u0000') continue;
+			if (ad.contains(board[curx][cury])) continue;
 			
-			ad.add(board[x+dxdy[i][0]][y+dxdy[i][1]]);
-			m =Math.max(m,dfs(x+dxdy[i][0],y+dxdy[i][1]));
-			ad.remove(board[x+dxdy[i][0]][y+dxdy[i][1]]);
+			ad.add(board[curx][cury]);
+			m =Math.max(m,dfs(curx,cury));
+			ad.remove(board[curx][cury]);
 		}
 		
 		return m;
