@@ -7,13 +7,6 @@ class Solution
 	static ArrayList<int[]> people;
 	static boolean[] selection;
 	static StringBuilder sb = new StringBuilder();
-	static Comparator<Integer> compareInt = new Comparator<Integer>() {
-		@Override
-		public int compare(Integer o1, Integer o2) {
-			// TODO Auto-generated method stub
-			return o1-o2;
-		}
-	};
 	
 	public static void main(String[] args) throws Exception
 	{
@@ -39,7 +32,7 @@ class Solution
 			}
 			
 			min = Integer.MAX_VALUE;
-			size =people.size();
+			size = people.size();
 			selection = new boolean[size];
 			
 			subset(0);
