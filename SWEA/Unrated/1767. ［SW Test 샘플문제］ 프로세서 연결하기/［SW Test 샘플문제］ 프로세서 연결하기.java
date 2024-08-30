@@ -72,10 +72,9 @@ class Solution {
 //				System.out.println(corex +" "+corey+" "+Arrays.toString(cores.get(i).direction));
 //			}
 			
-			boolean[] availableDirection = cores.get(0).direction;
+			coreDirection = new int[cores.size()];
 			for(int i = 0; i<=4; i++) {
-				coreDirection = new int[cores.size()];
-				if(!availableDirection[i]) continue;
+				if(!cores.get(0).direction[i]) continue;
 				coreDirection[0] = i;
 				tryconnect(1);
 			}
@@ -108,11 +107,6 @@ class Solution {
 					if(copy[posx][posy]!=0) {
 						posx -= dxdy[d][0];
 						posy -= dxdy[d][1];
-						while(posx!=corex || posy!=corey) {
-							copy[posx][posy] = 0;
-							posx -= dxdy[d][0];
-							posy -= dxdy[d][1];
-						}
 						success = false;
 						break;
 					}
@@ -138,9 +132,8 @@ class Solution {
 			
 			return;
 		}
-		boolean[] availableDirection = cores.get(n).direction;
 		for(int i = 0; i<=4; i++) {
-			if(!availableDirection[i]) continue;
+			if(!cores.get(n).direction[i]) continue;
 			coreDirection[n] = i;
 			tryconnect(n+1);
 		}
