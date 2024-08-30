@@ -99,6 +99,7 @@ class Solution {
 //			System.out.println(Arrays.toString(coreDirection));
 			int ptr = 0;
 			for (Core c : cores) {
+				if(con<coreConect-baseCoreConect) return;
 				int d = coreDirection[ptr++];
 				if (d==0) continue;
 				int posx = c.x+dxdy[d][0];
@@ -111,6 +112,7 @@ class Solution {
 						posx -= dxdy[d][0];
 						posy -= dxdy[d][1];
 						success = false;
+						con--;
 						break;
 					}
 					copy[posx][posy] = -1;
