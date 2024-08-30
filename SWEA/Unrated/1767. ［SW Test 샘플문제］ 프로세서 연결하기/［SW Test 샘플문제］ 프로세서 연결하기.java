@@ -76,7 +76,10 @@ class Solution {
 			for(int i = 0; i<=4; i++) {
 				if(!cores.get(0).direction[i]) continue;
 				coreDirection[0] = i;
-				tryconnect(1);
+				if(i!=0)
+					tryconnect(1,1);
+				else
+					tryconnect(1,0);
 			}
 			
 			sb.append("#"+test +" "+min+"\n");
@@ -84,8 +87,9 @@ class Solution {
 		System.out.println(sb);
 	}
 
-	private static void tryconnect(int n) {
+	private static void tryconnect(int n, int con) {
 		if (n==cores.size()) {
+			if(con<coreConect-baseCoreConect) return;
 			int conected = baseCoreConect;
 			int sum = 0;
 			int[][] copy = new int[N][];
@@ -135,7 +139,10 @@ class Solution {
 		for(int i = 0; i<=4; i++) {
 			if(!cores.get(n).direction[i]) continue;
 			coreDirection[n] = i;
-			tryconnect(n+1);
+			if(i!=0)
+				tryconnect(n+1,con+1);
+			else
+				tryconnect(n+1,con);
 		}
 	}
 
