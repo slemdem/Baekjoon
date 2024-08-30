@@ -11,10 +11,10 @@ class Solution {
 		public Core(int x, int y) {
 			this.x = x;
 			this.y = y;
+			this.direction = new boolean[5];
 		}
 		
 		public void findDirection() {
-			direction = new boolean[5];
 			direction[0] = true;
 			for (int i = 1; i < 5; i++) {
 				boolean success = true;
@@ -93,13 +93,12 @@ class Solution {
 				copy[i] = maxinos[i].clone();
 			}
 //			System.out.println(Arrays.toString(coreDirection));
-			for(int i=0; i<cores.size();i++) {
-				int d = coreDirection[i];
+			int ptr = 0;
+			for (Core c : cores) {
+				int d = coreDirection[ptr++];
 				if (d==0) continue;
-				int corex = cores.get(i).x;
-				int corey = cores.get(i).y;
-				int posx = corex+dxdy[d][0];
-				int posy = corey+dxdy[d][1];
+				int posx = c.x+dxdy[d][0];
+				int posy = c.y+dxdy[d][1];
 				
 				int cnt = 0;
 				boolean success = true;
@@ -132,6 +131,7 @@ class Solution {
 			
 			return;
 		}
+		
 		for(int i = 0; i<=4; i++) {
 			if(!cores.get(n).direction[i]) continue;
 			coreDirection[n] = i;
