@@ -13,10 +13,10 @@ public class Main {
 		int M = Integer.parseInt(st.nextToken());
 		int X = Integer.parseInt(st.nextToken());
 
-		int[][] route = new int[N+1][N+1];
+		ArrayList<int[]>[] route = new ArrayList[N+1];
 
 		for (int k =1; k<=N; k++) 
-			Arrays.fill(route[k], Integer.MAX_VALUE);
+			route[k]= new ArrayList<>();
 		
 		int from, to, weight;
 		for (int i =0; i<M; i++) {
@@ -25,33 +25,39 @@ public class Main {
 			to = Integer.parseInt(st.nextToken());
 			weight = Integer.parseInt(st.nextToken());
 			
-			route[from][to] = weight;
+			route[from].add(new int[] {to, weight});
 		}
-		
+
+		int[] go = new int[N+1], back = new int[N+1];
 		PriorityQueue<int[]> q = new PriorityQueue<>((o1,o2)->o1[1]-o2[1]);
 		for (int i =1; i<=N; i++) {
 			q.clear();
-			for(int j =1; j<=N; j++) {
-				if(route[i][j]!=Integer.MAX_VALUE) {
-					q.add(new int[] {j, route[i][j]});
-				}
+			int[] dij = new int[N+1];
+			for(int[] r : route[i]) {
+				dij[r[0]] = r[1];
+				q.add(r);
 			}
 			int cnt = 0;
 			while(!q.isEmpty()) {
 				int[] cur = q.poll();
 				
-				if(cur[1]==route[i][cur[0]]) {
+				if(cur[1]==dij[cur[0]]) {
 					cnt++;
-					if(cur[0]==X || cnt==N-1) {
+					if(cur[0]==X ) {
+						go[i] = dij[X];
+						break;
+					}
+					if(cnt==N-1) {
+						back = dij.clone();
 						break;
 					}
 				}
 				
-				for(int j =1; j<=N; j++) {
-					if(i==j || route[cur[0]][j]==Integer.MAX_VALUE) continue;
-					if(route[i][j] > route[i][cur[0]]+route[cur[0]][j]) {
-						q.add(new int[] {j, route[i][cur[0]]+route[cur[0]][j]});
-						route[i][j] = route[i][cur[0]]+route[cur[0]][j];
+				for(int[] r : route[cur[0]]) {
+					if(i==r[0]) continue;
+					if(dij[r[0]] > dij[cur[0]]+r[1] || dij[r[0]]== 0 ) {
+						dij[r[0]] = r[1]+dij[cur[0]];
+						q.add(new int[] {r[0],r[1]+dij[cur[0]]});
 					}
 				}
 			}
@@ -60,7 +66,7 @@ public class Main {
 		int max = 0;
 		
 		for (int i =1; i<=N; i++) {
-			if(route[X][i]+route[i][X]> max) max =route[X][i]+route[i][X];
+			if(go[i]+back[i]> max) max = go[i]+back[i];
 		}
 
 		System.out.println(max);
