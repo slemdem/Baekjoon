@@ -40,8 +40,7 @@ public class Main {
 			while(!q.isEmpty()) {
 				int[] cur = q.poll();
 				
-				if(cur[1]<=route[i][cur[0]]) {
-					route[i][cur[0]] = cur[1];
+				if(cur[1]==route[i][cur[0]]) {
 					cnt++;
 					if(cur[0]==X || cnt==N-1) {
 						break;
@@ -49,7 +48,8 @@ public class Main {
 				}
 				
 				for(int j =1; j<=N; j++) {
-					if(i!=j && route[cur[0]][j]!=Integer.MAX_VALUE && route[i][j] >route[i][cur[0]]+route[cur[0]][j]) {
+					if(i==j || route[cur[0]][j]==Integer.MAX_VALUE) continue;
+					if(route[i][j] > route[i][cur[0]]+route[cur[0]][j]) {
 						q.add(new int[] {j, route[i][cur[0]]+route[cur[0]][j]});
 						route[i][j] = route[i][cur[0]]+route[cur[0]][j];
 					}
