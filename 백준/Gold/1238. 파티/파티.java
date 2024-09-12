@@ -18,7 +18,7 @@ public class Main {
 		for (int k =1; k<=N; k++) 
 			route[k]= new ArrayList<>();
 		
-		int from, to, weight;
+		int from, to, weight, cnt;
 		for (int i =0; i<M; i++) {
 			st = new StringTokenizer(br.readLine()," ");
 			from = Integer.parseInt(st.nextToken());
@@ -28,16 +28,16 @@ public class Main {
 			route[from].add(new int[] {to, weight});
 		}
 
-		int[] go = new int[N+1], back = new int[N+1];
+		int[] dij, go = new int[N+1], back = new int[N+1];
 		PriorityQueue<int[]> q = new PriorityQueue<>((o1,o2)->o1[1]-o2[1]);
 		for (int i =1; i<=N; i++) {
 			q.clear();
-			int[] dij = new int[N+1];
+			dij = new int[N+1];
 			for(int[] r : route[i]) {
 				dij[r[0]] = r[1];
 				q.add(r);
 			}
-			int cnt = 0;
+			cnt = 0;
 			while(!q.isEmpty()) {
 				int[] cur = q.poll();
 				
