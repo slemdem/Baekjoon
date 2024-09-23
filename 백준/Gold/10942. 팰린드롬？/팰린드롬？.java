@@ -19,7 +19,7 @@ public class Main {
 			s = Integer.parseInt(st.nextToken())-1;
 			e = Integer.parseInt(st.nextToken())-1;
 			pd = true;
-			while (s<=e) {
+			while (s<=e&&pd) {
 				if(arr[s]!=arr[e]) pd=false;
 				s++;
 				e--;
