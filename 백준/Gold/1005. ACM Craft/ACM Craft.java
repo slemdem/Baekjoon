@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
     static int T, N, K;
     static int[] cost;
-    static boolean[] visited;
+    static int[] dp;
     static List<List<Integer>> order;
 
     public static void main(String[] args) throws Exception {
@@ -25,8 +25,8 @@ public class Main {
                 cost[i] = Integer.parseInt(st.nextToken());
             }
 
-            order = new LinkedList<>();
-            for(int i =0; i < N; i++) order.add(new LinkedList<>());
+            order = new ArrayList<>();
+            for(int i =0; i < N; i++) order.add(new ArrayList<>());
 
             for (int i = 0; i < K; i++){
                 st = new StringTokenizer(br.readLine());
@@ -35,7 +35,8 @@ public class Main {
                 order.get(n).add(p);
             }
 
-            visited = new boolean[N];
+            dp = new int[N];
+            Arrays.fill(dp, -1);
             int i = Integer.parseInt(br.readLine())-1;
 
             int result = dfs(i);
@@ -49,14 +50,14 @@ public class Main {
     }
 
     private static int dfs(int c) {
-        if(visited[c]) return cost[c];
+        if(dp[c] != -1) return dp[c];
 
         int pre = 0;
 
         for(int i : order.get(c)){
             pre = Math.max(pre,dfs(i));
         }
-        visited[c] = true;
-        return cost[c] = pre+cost[c];
+        
+        return dp[c] = pre+cost[c];
     }
 }
