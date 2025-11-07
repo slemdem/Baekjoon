@@ -4,60 +4,55 @@ import java.util.*;
 
 public class Main {
     static int N, M, count;
-    static List<List<Integer>> request;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-
         StringBuffer sb = new StringBuffer();
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        request = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
+        int[] indegree = new int[N];
 
-        for (int i = 0; i < N; i++) {
-            request.add(new ArrayList<>());
-        }
+        for (int i = 0; i < N; i++) graph.add(new ArrayList<>());
 
-        for (int m = 0; m < M; m++) {
+        for (int k = 0; k < M; k++) {
             st = new StringTokenizer(br.readLine());
-            int i = Integer.parseInt(st.nextToken());
+            int n = Integer.parseInt(st.nextToken());
             int pre = -1;
-            for (int j = 0; j < i; j++) {
-                int n = Integer.parseInt(st.nextToken())-1;
-                if(pre != -1){
-                    if (!request.get(n).contains(pre)) request.get(n).add(pre);
+
+            for (int v = 0; v < n; v++) {
+                int cur = Integer.parseInt(st.nextToken())-1;
+                if (v==0) {
+                    pre = cur;
+                    continue;
                 }
-                pre = n;
+                
+                if (!graph.get(cur).contains(pre)) {
+                    graph.get(cur).add(pre);
+                    indegree[cur]++;
+                }
+                pre = cur;
             }
         }
 
         Queue<Integer> que = new LinkedList<>();
         int count = 0;
 
-        for (int i = 0; i < N; i++) {
-            if(request.get(i).isEmpty()) {
-                que.offer(i);
-                sb.append(i+1).append("\n");
-                count++;
-            }
-        }
-
+        for (int i = 0; i < N; i++) if(indegree[i]==0) que.offer(i);
+            
         while (!que.isEmpty()) {
             int cur = que.poll();
+            sb.append(cur+1).append("\n");
+            count++;
 
-            for (int i = 0; i < request.size(); i++) {
-                List<Integer> r = request.get(i);
-                if(r.contains(cur)){
-                    r.remove(r.indexOf(cur));
-                    if (r.size() == 0) {
-                        que.add(i);
-                        sb.append(i+1).append("\n");
-                        count++;
-                    }
-                }
+            for (int i = 0; i < graph.size(); i++) {
+                List<Integer> r = graph.get(i);
+                if(r.contains(cur))
+                    if (--indegree[i] == 0) que.add(i);
             }
         }
 
